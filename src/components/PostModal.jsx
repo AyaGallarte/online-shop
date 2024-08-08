@@ -4,8 +4,10 @@ import { Modal, Button, Form } from 'react-bootstrap';
 export default function PostModal({ show, handleClose, handleSave, post }) {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const [userPost, setPost] = useState('');
 
     useEffect(() => {
+
         if (post) {
             setTitle(post.title);
             setContent(post.content);

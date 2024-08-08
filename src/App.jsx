@@ -29,7 +29,7 @@ function App() {
 
   useEffect(() => {
      if (token !== null){
-          fetch('http://localhost:4000/users/details', {
+          fetch('https://blog-server-nhh1.onrender.com/users/details', {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }

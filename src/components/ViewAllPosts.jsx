@@ -10,7 +10,7 @@ export default function ViewAllPosts() {
     const {user} = useContext(UserContext);
     console.log('this is the user' + user.id);
     const fetchData = () => {
-            let fetchUrl = "https://blog-apiserver.onrender.com/posts/getPosts";
+            let fetchUrl = "https://blog-server-nhh1.onrender.com/posts/getPosts";
 
             fetch(fetchUrl, {
                 headers: {
