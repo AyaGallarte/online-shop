@@ -13,7 +13,6 @@ export default function UserView({ posts }) {
     const [expanded, setExpanded] = useState({});
     const [refreshKey, setRefreshKey] = useState(0);
 
-
     useEffect(() => {
         setPosts(posts);  // Sync with prop changes
     }, [posts]);
@@ -45,8 +44,18 @@ export default function UserView({ posts }) {
     };
 
     const handleSavePost = (post) => {
+
+        if (!post.title || !post.content) {
+               Swal.fire({
+                   title: "Required Title And Content ",
+                   text: "Both title and content are required.",
+                   icon: "error",
+                   confirmButtonText: "OK"
+               });
+               return; // Prevent submission if validation fails
+            }
         let token = localStorage.getItem('token');
-        const url = editingPost ? `https://blog-server-nhh1.onrender.com/posts/updatePost/${post._id}` : 'https://blog-server-nhh1.onrender.com/posts/addPost';
+        const url = editingPost ? `http://localhost:4000/posts/updatePost/${post._id}` : 'http://localhost:4000/posts/addPost';
         const method = editingPost ? 'PATCH' : 'POST';
 
         fetch(url, {
@@ -59,10 +68,9 @@ export default function UserView({ posts }) {
         })
         .then(res => res.json())
         .then(data => {
-            setRefreshKey(prevKey => prevKey + 1);
+            //setRefreshKey(prevKey => prevKey + 1);
             
             if (data.updatedPost || data._id) {
-                
                 Swal.fire({
                     title: `${editingPost ? "Update" : "Add"} Post Successful`,
                     icon: "success",
@@ -70,7 +78,7 @@ export default function UserView({ posts }) {
                     showConfirmButton: false,
                     timer: 1500
                 });
-                
+
                 setPosts(prevPosts => {
                     if (editingPost) {
                         return prevPosts.map(p => (p._id === data.updatedPost._id ? data.updatedPost : p));
@@ -80,7 +88,8 @@ export default function UserView({ posts }) {
                             title: data.title,
                             content: data.content,
                             author: data.author,
-                            createdOn: data.createdOn
+                            createdOn: data.createdOn,
+                            userId: user.id
                         }];
                     }
                 });
@@ -99,15 +108,56 @@ export default function UserView({ posts }) {
         });
     };
 
+    const handleDeletePost = (postId) => {
+        let token = localStorage.getItem('token');
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`http://localhost:4000/posts/deletePost/${postId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.message === 'Post deleted successfully') {
+                        Swal.fire({
+                            title: 'Deleted!',
+                            text: 'Your post has been deleted.',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        setPosts(prevPosts => prevPosts.filter(post => post._id !== postId));
+                    } else {
+                        Swal.fire(
+                            'Error!',
+                            'There was a problem deleting the post.',
+                            'error'
+                        );
+                    }
+                });
+            }
+        });
+    };
+
     return (
         <Container className="container">
-            <Button className="btn btn-danger w-20" id="button-post-page" onClick={handleAddPost}>
+            <Button className="addpost-button btn btn-danger w-20" id="button-post-page" onClick={handleAddPost}>
                 Add Post
             </Button>
             <h2 className="page-title text-center">Posts</h2>
             <Row className="mt-4">
                 {userPosts.map(post => (
-                    <Col key={post._id} xs={3} sm={4} md={5} lg={6} className="mb-4">
+                    <Col key={post._id} xs={12} md={6} className="mb-4">
                         <Card className="card h-100">
                             <Card.Body className="cardBody">
                                 <Card.Title className="custom-card-title">{post.title}</Card.Title>
@@ -132,7 +182,7 @@ export default function UserView({ posts }) {
                                     })}</span>      
                                 </Card.Text>
                             </Card.Body>
-                            <Card.Footer>
+                            <Card.Footer className="card-footer">
                                 <Link to={`/posts/${post._id}`} className="btn btn-danger w-50">
                                     Continue Reading
                                 </Link>
@@ -140,9 +190,17 @@ export default function UserView({ posts }) {
                                     variant="warning" 
                                     onClick={() => handleEditPost(post)} 
                                     className="ml-2"
-                                    // disabled={user.id !== post.userId}
+                                    disabled={post.userId !== user.id} // Only the owner of the post can edit
                                 >
                                     Edit Post
+                                </Button>
+                                <Button 
+                                    variant="danger"
+                                    onClick={() => handleDeletePost(post._id)}
+                                    className="ml-2"
+                                    disabled={post.userId !== user.id} // Only the owner of the post can delete
+                                >
+                                    Delete Post
                                 </Button>
                             </Card.Footer>
                         </Card>

@@ -30,17 +30,17 @@ html, body {
 
 body {
     background-color: #e2e7f3 !important;
-    font-weight: 500;
 }
 
 .home-images img {
-    height: 40vh;
-    width: 100;
+    min-height: 45vh;
+    min-width: 100;
 }
 
 .nav {
-    background-color: #0d003d;
+    background-color: #27c400;
     font-size: 1.5rem;
+    font-weight: 600;
 }
 
 .nav a {
@@ -53,4 +53,35 @@ body {
 
 .active {
     color: white!important;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: center; /* Center the buttons horizontally */
+    gap: 10px; /* Add space between the buttons */
+    padding: 10px; /* Adjust padding if needed */
+}
+
+.card-footer .btn {
+    margin: 0 5px; /* Add horizontal margin to individual buttons if needed */
+}
+
+.card {
+    width: 100%; /* Ensures card takes full width of its column */
+}
+
+.cardBody {
+    padding: 1rem; /* Adjust padding if needed */
+}
+
+.custom-card-comments button, .addpost-button {
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.register-button {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-left: 16px;
 }

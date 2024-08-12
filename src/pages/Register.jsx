@@ -21,7 +21,7 @@ export default function Register() {
         // Prevents the page redirection via form submission
         e.preventDefault();
 
-        fetch("https://blog-server-nhh1.onrender.com/users/register", {
+        fetch("http://localhost:4000/users/register", {
 
             method: 'POST',
             headers: {
@@ -135,6 +135,7 @@ export default function Register() {
                              type="password"
                              required
                              value={password}
+                             placeholder="Enter password"
                              onChange={e => { setPassword(e.target.value) }}
                          />
                      </Form.Group>
@@ -145,16 +146,19 @@ export default function Register() {
                              type="password"
                              required
                              value={confirmPassword}
+                             placeholder="Confirm password"
                              onChange={e => { setConfirmPassword(e.target.value) }}
                          />
                      </Form.Group>
                      </Col>
 
+                     <div className="register-button">
                      {isActive ? 
                        <Button className="btn mt-3" variant="success" type="submit" id="submitBtn">Register Now</Button> 
                        : 
                        <Button className="btn mt-3" variant="danger" type="submit" id="submitBtn" disabled>Register Now</Button>
                      }
+                     </div>
                  </Form>
             </Col>
         </Row>

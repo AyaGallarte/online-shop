@@ -11,10 +11,10 @@ export default function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [isActive, setIsActive] = useState(true);
-
+//https://blog-server-nhh1.onrender.com/users/login
     function authenticate(e) {
         e.preventDefault();
-        fetch('https://blog-server-nhh1.onrender.com/users/login', {
+        fetch('http://localhost:4000/users/login', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
@@ -120,6 +120,7 @@ export default function Login() {
                                 />
                             </Form.Group>
 
+                            <div className="login-button">
                             { isActive ? 
                                 <Button className="btn" variant="primary" type="submit" id="loginBtn">
                                     Login
@@ -129,6 +130,7 @@ export default function Login() {
                                     Login
                                 </Button>
                             }
+                            </div>
                         </Form>
                     </Col>
                 </Row>
