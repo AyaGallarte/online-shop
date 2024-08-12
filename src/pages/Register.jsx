@@ -21,7 +21,7 @@ export default function Register() {
         // Prevents the page redirection via form submission
         e.preventDefault();
 
-        fetch("http://localhost:4000/users/register", {
+        fetch("https://blog-server-nhh1.onrender.com/users/register", {
 
             method: 'POST',
             headers: {

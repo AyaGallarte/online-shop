@@ -23,7 +23,7 @@ export default function Post() {
 
     // Fetch post and comments
     useEffect(() => {
-        fetch(`http://localhost:4000/posts/getPost/${postId}`)
+        fetch(`https://blog-server-nhh1.onrender.com/posts/getPost/${postId}`)
             .then(res => res.json())
             .then(data => {
                 setTitle(data.title);
@@ -48,7 +48,7 @@ export default function Post() {
 
     const handleSaveComment = (postId, comment) => {
         let token = localStorage.getItem('token');
-        fetch(`http://localhost:4000/posts/addComment/${postId}`, {
+        fetch(`https://blog-server-nhh1.onrender.com/posts/addComment/${postId}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ export default function Post() {
     const handleSaveEditComment = () => {
         let token = localStorage.getItem('token');
 
-        fetch(`http://localhost:4000/posts/editComment/${postId}/${editCommentId}`, {
+        fetch(`https://blog-server-nhh1.onrender.com/posts/editComment/${postId}/${editCommentId}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ export default function Post() {
 
     const handleDeleteComment = (commentId) => {
         let token = localStorage.getItem('token');
-        fetch(`http://localhost:4000/posts/deleteComment/${postId}/${commentId}`, {
+        fetch(`https://blog-server-nhh1.onrender.com/posts/deleteComment/${postId}/${commentId}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${token}`

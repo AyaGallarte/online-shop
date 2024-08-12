@@ -14,7 +14,7 @@ export default function Login() {
 //https://blog-server-nhh1.onrender.com/users/login
     function authenticate(e) {
         e.preventDefault();
-        fetch('http://localhost:4000/users/login', {
+        fetch('https://blog-server-nhh1.onrender.com/users/login', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
@@ -64,7 +64,7 @@ export default function Login() {
     }
 
     function retrieveUserDetails(token){
-        fetch('http://localhost:4000/users/details', {
+        fetch('https://blog-server-nhh1.onrender.com/users/details', {
             headers: {
                 Authorization: `Bearer ${token}`
             }

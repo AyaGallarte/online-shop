@@ -10,7 +10,7 @@ export default function ViewAllPosts() {
     const {user} = useContext(UserContext);
     console.log('this is the user' + user.id);
     const fetchData = async () => {
-        let fetchUrl = "http://localhost:4000/posts/getPosts";
+        let fetchUrl = "https://blog-server-nhh1.onrender.com/posts/getPosts";
 
         try {
             const response = await fetch(fetchUrl, {

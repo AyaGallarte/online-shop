@@ -55,7 +55,7 @@ export default function UserView({ posts }) {
                return; // Prevent submission if validation fails
             }
         let token = localStorage.getItem('token');
-        const url = editingPost ? `http://localhost:4000/posts/updatePost/${post._id}` : 'http://localhost:4000/posts/addPost';
+        const url = editingPost ? `https://blog-server-nhh1.onrender.com/posts/updatePost/${post._id}` : 'https://blog-server-nhh1.onrender.com/posts/addPost';
         const method = editingPost ? 'PATCH' : 'POST';
 
         fetch(url, {
@@ -120,7 +120,7 @@ export default function UserView({ posts }) {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:4000/posts/deletePost/${postId}`, {
+                fetch(`https://blog-server-nhh1.onrender.com/posts/deletePost/${postId}`, {
                     method: 'DELETE',
                     headers: {
                         'Authorization': `Bearer ${token}`
