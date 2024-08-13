@@ -46,86 +46,179 @@ export default function Post() {
         setShowModal(true);
     };
 
-    const handleSaveComment = (postId, comment) => {
+    // const handleSaveComment = (postId, comment) => {
+    //     let token = localStorage.getItem('token');
+    //     fetch(`https://blog-server-nhh1.onrender.com/posts/addComment/${postId}`, {
+    //         method: 'PATCH',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Authorization': `Bearer ${token}`
+    //         },
+    //         body: JSON.stringify({ comments: comment })
+    //     })
+    //     .then(res => res.json())
+    //     .then(data => {
+    //         if (data.message === "Post not found") {
+    //             Swal.fire({ title: "Comment Add Failed", icon: "error", text: data.error });
+    //         } else {
+    //             setRefreshKey(prevKey => prevKey + 1);
+    //             Swal.fire({ title: "Add Comment Successful", icon: "success", text: "Comment added successfully.", showConfirmButton: false, timer: 1500 });
+    //             setShowModal(false);
+    //         }
+    //     })
+    //     .catch(error => console.error('There was a problem with the fetch operation:', error));
+    // };
+
+    // const handleEditComment = (commentId, commentText) => {
+    //     console.log('handleEdit ' + commentText); // commentText is okay here
+    //     setIsEditing(true);
+    //     setCommentText(commentText); 
+    //     setEditCommentId(commentId);
+    //     setShowModal(true);
+    // };
+
+    // const handleSaveEditComment = () => {
+    //     let token = localStorage.getItem('token');
+
+    //     fetch(`https://blog-server-nhh1.onrender.com/posts/editComment/${postId}/${editCommentId}`, {
+    //         method: 'PATCH',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Authorization': `Bearer ${token}`
+    //         },
+    //         body: JSON.stringify({ comments: editCommentText })
+
+    //     })
+    //     .then(res => res.json())
+    //     .then(data => {
+    //         if (data.message === "Comment not found") {
+    //             Swal.fire({ title: "Edit Comment Failed", icon: "error", text: data.error });
+    //         } else {
+    //             setRefreshKey(prevKey => prevKey + 1);
+    //             Swal.fire({ 
+    //                 title: "Edit Comment Successful", 
+    //                 icon: "success", 
+    //                 text: "Comment edited successfully.", 
+    //                 showConfirmButton: false, 
+    //                 timer: 1500 });
+    //             setShowModal(false);
+    //         }
+    //     })
+    //     .catch(error => console.error('There was a problem with the fetch operation:', error));
+    // };
+
+    // const handleDeleteComment = (commentId) => {
+    //     let token = localStorage.getItem('token');
+    //     fetch(`https://blog-server-nhh1.onrender.com/posts/deleteComment/${postId}/${commentId}`, {
+    //         method: 'DELETE',
+    //         headers: {
+    //             'Authorization': `Bearer ${token}`
+    //         }
+    //     })
+    //     .then(res => res.json())
+    //     .then(data => {
+    //         if (data.message === "Comment not found") {
+    //             Swal.fire({ title: "Delete Comment Failed", icon: "error", text: data.error });
+    //         } else {
+    //             setRefreshKey(prevKey => prevKey + 1);
+    //             Swal.fire({ title: "Delete Comment Successful", icon: "success", text: "Comment deleted successfully.", showConfirmButton: false, timer: 1500 });
+    //         }
+    //     })
+    //     .catch(error => console.error('There was a problem with the fetch operation:', error));
+    // };
+
+    const handleSaveComment = async (postId, comment) => {
         let token = localStorage.getItem('token');
-        fetch(`https://blog-server-nhh1.onrender.com/posts/addComment/${postId}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({ comments: comment })
-        })
-        .then(res => res.json())
-        .then(data => {
+        try {
+            const response = await fetch(`https://blog-server-nhh1.onrender.com/posts/addComment/${postId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ comments: comment })
+            });
+            const data = await response.json();
+
             if (data.message === "Post not found") {
                 Swal.fire({ title: "Comment Add Failed", icon: "error", text: data.error });
             } else {
                 setRefreshKey(prevKey => prevKey + 1);
-                Swal.fire({ title: "Add Comment Successful", icon: "success", text: "Comment added successfully.", showConfirmButton: false, timer: 1500 });
+                Swal.fire({
+                    title: "Add Comment Successful",
+                    icon: "success",
+                    text: "Comment added successfully.",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 setShowModal(false);
             }
-        })
-        .catch(error => console.error('There was a problem with the fetch operation:', error));
+        } catch (error) {
+            console.error('There was a problem with the fetch operation:', error);
+        }
     };
 
-    const handleEditComment = (commentId, commentText) => {
-        console.log('handleEdit ' + commentText); // commentText is okay here
-        setIsEditing(true);
-        setCommentText(commentText); 
-        setEditCommentId(commentId);
-        setShowModal(true);
-    };
-
-    const handleSaveEditComment = () => {
+    const handleSaveEditComment = async () => {
         let token = localStorage.getItem('token');
 
-        fetch(`https://blog-server-nhh1.onrender.com/posts/editComment/${postId}/${editCommentId}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({ comments: editCommentText })
+        try {
+            const response = await fetch(`https://blog-server-nhh1.onrender.com/posts/editComment/${postId}/${editCommentId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ comments: editCommentText })
+            });
+            const data = await response.json();
 
-        })
-        .then(res => res.json())
-        .then(data => {
             if (data.message === "Comment not found") {
                 Swal.fire({ title: "Edit Comment Failed", icon: "error", text: data.error });
             } else {
                 setRefreshKey(prevKey => prevKey + 1);
-                Swal.fire({ 
-                    title: "Edit Comment Successful", 
-                    icon: "success", 
-                    text: "Comment edited successfully.", 
-                    showConfirmButton: false, 
-                    timer: 1500 });
+                Swal.fire({
+                    title: "Edit Comment Successful",
+                    icon: "success",
+                    text: "Comment edited successfully.",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 setShowModal(false);
             }
-        })
-        .catch(error => console.error('There was a problem with the fetch operation:', error));
+        } catch (error) {
+            console.error('There was a problem with the fetch operation:', error);
+        }
     };
 
-    const handleDeleteComment = (commentId) => {
+    const handleDeleteComment = async (commentId) => {
         let token = localStorage.getItem('token');
-        fetch(`https://blog-server-nhh1.onrender.com/posts/deleteComment/${postId}/${commentId}`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-        .then(res => res.json())
-        .then(data => {
+
+        try {
+            const response = await fetch(`https://blog-server-nhh1.onrender.com/posts/deleteComment/${postId}/${commentId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const data = await response.json();
+
             if (data.message === "Comment not found") {
                 Swal.fire({ title: "Delete Comment Failed", icon: "error", text: data.error });
             } else {
                 setRefreshKey(prevKey => prevKey + 1);
-                Swal.fire({ title: "Delete Comment Successful", icon: "success", text: "Comment deleted successfully.", showConfirmButton: false, timer: 1500 });
+                Swal.fire({
+                    title: "Delete Comment Successful",
+                    icon: "success",
+                    text: "Comment deleted successfully.",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
             }
-        })
-        .catch(error => console.error('There was a problem with the fetch operation:', error));
+        } catch (error) {
+            console.error('There was a problem with the fetch operation:', error);
+        }
     };
+
 
     return (
         <Container className="container">
