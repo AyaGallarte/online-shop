@@ -27,7 +27,7 @@ function App() {
 
   useEffect(() => {
      if (token !== null){
-          fetch('hhttps://blog-server-nhh1.onrender.com/users/details', {
+          fetch('https://blog-server-nhh1.onrender.com/users/details', {
       mode: 'cors',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
