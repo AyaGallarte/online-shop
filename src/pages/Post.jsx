@@ -130,7 +130,7 @@ export default function Post() {
     const handleSaveComment = async (postId, comment) => {
         let token = localStorage.getItem('token');
         try {
-            const response = await fetch(`https://blog-server-nhh1.onrender.com/posts/addComment/${postId}`, {
+            const response = await fetch(`https://blog-server-nhh1.onrender.com/posts/addComment/${postId}`, { mode: 'cors' }, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
