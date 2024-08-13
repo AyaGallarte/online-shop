@@ -151,9 +151,11 @@ export default function UserView({ posts }) {
 
     return (
         <Container className="container">
+            <div>
             <Button className="addpost-button btn btn-danger w-20" id="button-post-page" onClick={handleAddPost}>
                 Add Post
             </Button>
+            </div>
             <h2 className="page-title text-center">Posts</h2>
             <Row className="mt-4">
                 {userPosts.map(post => (

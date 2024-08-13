@@ -11,7 +11,7 @@ export default function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [isActive, setIsActive] = useState(true);
-//https://blog-server-nhh1.onrender.com/users/login
+
     function authenticate(e) {
         e.preventDefault();
         fetch('https://blog-server-nhh1.onrender.com/users/login', {

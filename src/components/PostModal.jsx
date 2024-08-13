@@ -7,7 +7,6 @@ export default function PostModal({ show, handleClose, handleSave, post }) {
     const [userPost, setPost] = useState('');
 
     useEffect(() => {
-
         if (post) {
             setTitle(post.title);
             setContent(post.content);

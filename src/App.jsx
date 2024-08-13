@@ -12,8 +12,6 @@ import Logout from './pages/Logout';
 import ViewAllPosts from './components/ViewAllPosts';
 import UserView from './pages/UserView';
 import Post from './pages/Post';
-//import UserViewWrapper from './components/UserViewWrapper';
-
 
 function App() {
   const [user, setUser] = useState({
@@ -29,7 +27,8 @@ function App() {
 
   useEffect(() => {
      if (token !== null){
-          fetch('https://blog-server-nhh1.onrender.com/users/details', { mode: 'cors' }, {
+          fetch('hhttps://blog-server-nhh1.onrender.com/users/details', {
+      mode: 'cors',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }

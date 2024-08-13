@@ -5,10 +5,9 @@ import UserContext from '../context/UserContext';
 
 
 export default function ViewAllPosts() {
-
     const [posts, setPosts] = useState([]);
     const {user} = useContext(UserContext);
-    console.log('this is the user' + user.id);
+
     const fetchData = async () => {
         let fetchUrl = "https://blog-server-nhh1.onrender.com/posts/getPosts";
 

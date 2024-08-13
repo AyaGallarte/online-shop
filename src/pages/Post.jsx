@@ -23,7 +23,7 @@ export default function Post() {
 
     // Fetch post and comments
     useEffect(() => {
-        fetch(`https://blog-server-nhh1.onrender.com/posts/getPost/${postId}`)
+        fetch(`http://localhost:4000/posts/getPost/${postId}`)
             .then(res => res.json())
             .then(data => {
                 setTitle(data.title);
@@ -127,11 +127,15 @@ export default function Post() {
     //     .catch(error => console.error('There was a problem with the fetch operation:', error));
     // };
 
+    const API_URL = 'https://blog-server-nhh1.onrender.com';
+    const API_URL_DEV = 'http://localhost:4000';
+
     const handleSaveComment = async (postId, comment) => {
         let token = localStorage.getItem('token');
         try {
-            const response = await fetch(`https://blog-server-nhh1.onrender.com/posts/addComment/${postId}`, { mode: 'cors' }, {
+            const response = await fetch(`http://localhost:4000/posts/addComment/${postId}`, {
                 method: 'PATCH',
+                mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
@@ -162,7 +166,7 @@ export default function Post() {
         let token = localStorage.getItem('token');
 
         try {
-            const response = await fetch(`https://blog-server-nhh1.onrender.com/posts/editComment/${postId}/${editCommentId}`, {
+            const response = await fetch(`http://localhost:4000/posts/editComment/${postId}/${editCommentId}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -194,7 +198,7 @@ export default function Post() {
         let token = localStorage.getItem('token');
 
         try {
-            const response = await fetch(`https://blog-server-nhh1.onrender.com/posts/deleteComment/${postId}/${commentId}`, {
+            const response = await fetch(`http://localhost:4000/posts/deleteComment/${postId}/${commentId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`
