@@ -34,6 +34,7 @@ export default function Logout() {
                         isAdmin: null,
                     });
                     localStorage.clear();
+                    sessionStorage.clear();
                     navigate('/login');
                 } else if (result.isDismissed) {
                     navigate('/');

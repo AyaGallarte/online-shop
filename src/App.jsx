@@ -40,11 +40,13 @@ function App() {
           id: data.user._id,
           isAdmin: data.user.isAdmin
         });
+        sessionStorage.setItem('token', token);
       } else {
         setUser({
           id: null,
           isAdmin: null
         });
+        sessionStorage.clear();
       }
     });
      }
