@@ -151,7 +151,7 @@ export default function UserView({ posts }) {
 
     return (
         <Container className="container">
-            <div>
+            <div inert>
             <Button className="addpost-button btn btn-danger w-20" id="button-post-page" onClick={handleAddPost}>
                 Add Post
             </Button>
