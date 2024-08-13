@@ -1,80 +1,106 @@
-import { useState, useEffect } from 'react';
-import { Container } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { UserProvider } from './context/UserContext';
-import AppNavbar from './components/AppNavbar';
+// import { useState, useEffect } from 'react';
+// import { Container } from 'react-bootstrap';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+// import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+// import { UserProvider } from './context/UserContext';
+// import AppNavbar from './components/AppNavbar';
 
-import Home from './pages/Home';
-import Register from './pages/Register';
-import Login from './pages/Login';
-import Logout from './pages/Logout';
-import ViewAllPosts from './components/ViewAllPosts';
-import UserView from './pages/UserView';
-import Post from './pages/Post';
-//import UserViewWrapper from './components/UserViewWrapper';
+// import Home from './pages/Home';
+// import Register from './pages/Register';
+// import Login from './pages/Login';
+// import Logout from './pages/Logout';
+// import ViewAllPosts from './components/ViewAllPosts';
+// import UserView from './pages/UserView';
+// import Post from './pages/Post';
+// //import UserViewWrapper from './components/UserViewWrapper';
 
+
+// function App() {
+//   const [user, setUser] = useState({
+//     id: null,
+//     isAdmin: null
+//   });
+
+//   function unsetUser() {
+//     localStorage.clear();
+//   }
+
+//   const token = localStorage.getItem('token');
+
+//   useEffect(() => {
+//      if (token !== null){
+//           fetch('https://blog-server-nhh1.onrender.com/users/details', { mode: 'cors' }, {
+//       headers: {
+//         Authorization: `Bearer ${localStorage.getItem('token')}`
+//       }
+//     })
+//     .then(res => res.json())
+//     .then(data => {
+//       if(typeof data !== 'undefined') {
+//         setUser({
+//           id: data.user._id,
+//           isAdmin: data.user.isAdmin
+//         });
+//       } else {
+//         setUser({
+//           id: null,
+//           isAdmin: null
+//         });
+//       }
+//     });
+//      }
+//   }, []);
+
+//   useEffect(() => {
+//     console.log(user);
+//     console.log(localStorage);
+//   }, [user]);
+
+//   return (
+//     <UserProvider value={{ user, setUser, unsetUser }}>
+//       <Router>
+//         <AppNavbar />
+//         <Container>
+//           <Routes>
+//             <Route path="/" element={<Home />} />
+//             <Route path="/register" element={<Register />} />
+//             <Route path="/login" element={<Login />} />
+//             <Route path="/logout" element={<Logout />} />
+//             <Route path="/viewAllPosts" element={<ViewAllPosts />} />
+//             <Route path="/userView" element={<UserView />} />
+//             <Route path="/posts/:postId" element={<Post />} />
+//           </Routes>
+//         </Container>
+//       </Router>
+//     </UserProvider>
+//   );
+// }
+
+// export default App;
+
+import { useEffect } from 'react';
+import './App.css';
 
 function App() {
-  const [user, setUser] = useState({
-    id: null,
-    isAdmin: null
-  });
-
-  function unsetUser() {
-    localStorage.clear();
-  }
-
-  const token = localStorage.getItem('token');
+  const makeAPICall = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/cors', { mode: 'cors' });
+      const data = await response.text(); // Change this if your endpoint returns JSON
+      console.log({ data });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   useEffect(() => {
-     if (token !== null){
-          fetch('https://blog-server-nhh1.onrender.com/users/details', {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
-    })
-    .then(res => res.json())
-    .then(data => {
-      if(typeof data !== 'undefined') {
-        setUser({
-          id: data.user._id,
-          isAdmin: data.user.isAdmin
-        });
-      } else {
-        setUser({
-          id: null,
-          isAdmin: null
-        });
-      }
-    });
-     }
+    makeAPICall();
   }, []);
 
-  useEffect(() => {
-    console.log(user);
-    console.log(localStorage);
-  }, [user]);
-
   return (
-    <UserProvider value={{ user, setUser, unsetUser }}>
-      <Router>
-        <AppNavbar />
-        <Container>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/logout" element={<Logout />} />
-            <Route path="/viewAllPosts" element={<ViewAllPosts />} />
-            <Route path="/userView" element={<UserView />} />
-            <Route path="/posts/:postId" element={<Post />} />
-          </Routes>
-        </Container>
-      </Router>
-    </UserProvider>
+    <div className="App">
+      <h1>Check Console for API Call Results</h1>
+    </div>
   );
 }
 
 export default App;
-
