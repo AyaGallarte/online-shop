@@ -40,7 +40,7 @@ function App() {
           id: data.user._id,
           isAdmin: data.user.isAdmin
         });
-        sessionStorage.setItem('token', token);
+        sessionStorage.setItem('token', data.token);
       } else {
         setUser({
           id: null,
