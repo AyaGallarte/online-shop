@@ -122,7 +122,7 @@ export default function Login() {
 
                             <div className="login-button">
                             { isActive ? 
-                                <Button className="btn" variant="primary" type="submit" id="loginBtn">
+                                <Button className="btn" variant="success" type="submit" id="loginBtn">
                                     Login
                                 </Button>
                                 : 
