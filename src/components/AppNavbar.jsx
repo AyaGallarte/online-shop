@@ -2,14 +2,7 @@ import React, { useContext } from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Link, NavLink } from 'react-router-dom';
 import UserContext from '../context/UserContext';
-import { CgProfile } from "react-icons/cg";
-import { IoHomeOutline } from "react-icons/io5";
-import { PiTShirtDuotone } from "react-icons/pi";
-import { BsCart3 } from "react-icons/bs";
-import { LuLogOut } from "react-icons/lu";
-import { MdOutlineBorderColor } from "react-icons/md";
-import { RiLoginBoxLine } from "react-icons/ri";
-import { LuClipboardList } from "react-icons/lu";
+
 import logo from '../images/logo.png'; 
 import '../style.css';
 
