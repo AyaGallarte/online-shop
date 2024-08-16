@@ -13,6 +13,10 @@ import ViewAllPosts from './components/ViewAllPosts';
 import UserView from './pages/UserView';
 import Post from './pages/Post';
 
+
+import Profile from './pages/Profile';
+import ProductView from './pages/ProductView'
+
 function App() {
   const [user, setUser] = useState({
     id: null,
@@ -64,6 +68,8 @@ function App() {
         <Container>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/products/:productId" element={<ProductView />}/>
 
           </Routes>
         </Container>
