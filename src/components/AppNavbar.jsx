@@ -25,8 +25,27 @@ export default function AppNavbar() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Link as={NavLink} to="/">Home</Nav.Link>
-                        <Nav.Link as={NavLink} to="/login">Login</Nav.Link>
-                        <Nav.Link as={NavLink} to="/register">Register</Nav.Link>
+                        <Nav.Link as={NavLink} to="/products">Products</Nav.Link>
+                    </Nav>
+
+                    <Nav className="ms-auto">
+                        {user && user.id !== null && user.id !== undefined ? (
+                            user.isAdmin ? (       
+                                <Nav.Link as={NavLink} to="/logout">Logout</Nav.Link>
+                            ) : (
+                                <>
+                                    <Nav.Link as={NavLink} to="/cart">Cart</Nav.Link>
+                                    <Nav.Link as={NavLink} to="/order">Order</Nav.Link>
+                                    <Nav.Link as={NavLink} to="/profile">Profile</Nav.Link>
+                                    <Nav.Link as={NavLink} to="/logout">Logout</Nav.Link>
+                                </>
+                            )
+                        ) : (
+                            <>
+                                <Nav.Link as={NavLink} to="/login">Login</Nav.Link>
+                                <Nav.Link as={NavLink} to="/register">Register</Nav.Link>
+                            </>
+                        )}
                     </Nav>
                 </Navbar.Collapse>
             </Container>

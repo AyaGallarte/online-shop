@@ -1,13 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet');
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Fira Sans, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -15,73 +14,88 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-* {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
 }
-
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden; /* Prevent horizontal scroll */
+a:hover {
+  color: #535bf2;
 }
 
 body {
-    background-color: #e2e7f3 !important;
+  font-family: "Roboto";
+  font-optical-sizing: auto;
 }
 
-.home-images img {
-    min-height: 45vh;
-    min-width: 100;
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
 }
 
-.nav {
-    background-color: hotpink;
-    font-size: 1.5rem;
-    font-weight: 600;
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+/*  padding: 0.6em 1.2em;*/
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
 }
 
-.nav a {
-    color: white;
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
 }
 
-.nav a:hover {
-    color: yellow;
+.custom-card-title {
+    color: #68a9eb;
+    margin-bottom: 1em;
+    text-align: center;
 }
 
-.active {
-    color: white!important;
+.custom-card-description {
+    text-align: left;
+    margin-bottom: 2em;
 }
 
-.card-footer {
+.custom-card-price {
+    text-align: left;
+    color: #ff9448;
+}
+
+.custom-price {
+    text-align: left;
+}
+
+/*.page-title {
+    font-size: 2rem;
+}
+*/
+/*.page-container {
     display: flex;
-    justify-content: center; /* Center the buttons horizontally */
-    gap: 10px; /* Add space between the buttons */
-    padding: 10px; /* Adjust padding if needed */
-}
+    min-height: 100vh;
+    flex-direction: column;
+}*/
 
-.card-footer .btn {
-    margin: 0 5px; /* Add horizontal margin to individual buttons if needed */
-}
-
-.card {
-    width: 100%; /* Ensures card takes full width of its column */
-}
-
-.cardBody {
-    padding: 1rem; /* Adjust padding if needed */
-}
-
-.custom-card-comments button, .addpost-button {
-    margin-right: 10px;
-    margin-top: 10px;
-}
-
-.register-button {
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    margin-left: 16px;
+/* Main content area */
+.content-wrapper {
+    flex: 1; 
 }
