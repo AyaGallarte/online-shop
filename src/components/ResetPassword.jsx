@@ -38,7 +38,7 @@ export default function ResetPassword() {
     if (result.isConfirmed) {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`https://ecommerce-api-9r0z.onrender.com/users/update-password`, {
+        const response = await fetch(`https://ra-server-nom3.onrender.com/users/update-password`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
