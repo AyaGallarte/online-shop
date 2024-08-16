@@ -3,33 +3,49 @@ import { Form, Button, Col, Row, Container } from 'react-bootstrap';
 import { useNavigate, Navigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import UserContext from '../context/UserContext';
+import '../style.css';
 
 export default function Register() {
-    const { user } = useContext(UserContext);
-    const navigate = useNavigate(); 
 
+    const {user} = useContext(UserContext);
+    const navigate = useNavigate(); 
     // State hooks to store the values of the input fields
-    const [username, setUsername] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
+    const [mobileNo, setMobileNo] = useState("")
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    // State to determine whether submit button is enabled or not
+    // State to determine whether submit button is enable or not
     const [isActive, setIsActive] = useState(false);
 
-    const makeAPICall = async (userData) => {
-        try {
-            const response = await fetch('https://ra-server-nom3.onrender.com/users/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(userData)
-            });
-            const data = await response.json();
+    function registerUser(e){
+        // Prevents the page redirection via form submission
+        e.preventDefault();
 
-            if (data.message === "Registered Successfully") {
-                setUsername("");
+        fetch("https://ra-server-nom3.onrender.com/users/register", {
+
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                mobileNo: mobileNo,
+                password: password
+            })
+
+        })
+        .then(res => res.json())
+        .then(data => {
+
+            if(data.message === "Registered Successfully"){
+                setFirstName("");
+                setLastName("");
                 setEmail("");
+                setMobileNo("");
                 setPassword("");
                 setConfirmPassword("");
 
@@ -42,127 +58,149 @@ export default function Register() {
                 }).then(() => {
                     navigate('/login');
                 });
-            } else if (data.error === "Email invalid") {
+
+            }else if(data.error === "Email invalid"){
                 Swal.fire({
                     title: "Invalid Email Format",
                     icon: "error",
-                    text: "Invalid email format."
-                });
-            } else if (data.error === "Mobile number invalid") {
+                    text: "Invalid email format.",
+                    customClass: {
+                        confirmButton: 'sweet-warning'
+                    }
+                })
+            }else if(data.error === "Mobile number invalid"){
                 Swal.fire({
                     title: "Mobile Number Invalid",
                     icon: "error",
-                    text: "Invalid mobile number."
-                });
-            } else if (data.error === "Password must be at least 8 characters") {
+                    text: "Invalid mobile number.",
+                    customClass: {
+                        confirmButton: 'sweet-warning'
+                    }
+                })
+            }else if(data.error === "Password must be atleast 8 characters"){
                 Swal.fire({
                     title: "Password Invalid",
                     icon: "error",
-                    text: "Password must be at least 8 characters long."
-                });
-            } else {
+                    text: "Password must be atleast 8 characters long.",
+                    customClass: {
+                        confirmButton: 'sweet-warning'
+                    }
+                })
+            }else{
                 Swal.fire({
                     title: "Something went wrong.",
                     icon: "error",
-                    text: "Please try again later or contact us for assistance."
+                    text: "Please try again later or contact us for assistance.",
+                    customClass: {
+                        confirmButton: 'sweet-warning'
+                    }
                 });
             }
-        } catch (e) {
-            console.error('Fetch error:', e);
-            Swal.fire({
-                title: "Error",
-                icon: "error",
-                text: "An unexpected error occurred. Please try again later."
-            });
-        }
-    };
+        })
+    }
 
     useEffect(() => {
-        if (username && email && password && confirmPassword && password === confirmPassword) {
-            setIsActive(true);
-        } else {
-            setIsActive(false);
-        }
-    }, [username, email, password, confirmPassword]);
+        if((firstName !== "" && lastName !== "" && email !== "" && mobileNo !== "" && password !== "" && confirmPassword !== "") && (password === confirmPassword) && (mobileNo.length === 11)){
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        makeAPICall({ username, email, password });
-    };
+            setIsActive(true)
+
+        } else {
+
+            setIsActive(false)
+
+        }
+    }, [firstName, lastName, email, mobileNo, password, confirmPassword])
 
     return (
-        user.id ? 
-        <Navigate to="/login" /> 
-        : 
-        <Container className="register-container d-flex justify-content-center">
-            <Row className="w-100">
-                <Col md={4} lg={5} className="mx-auto">
-                    <Form onSubmit={handleSubmit} className="register-form">
-                        <h2 className="text-center">Register</h2>
-                        <p className="text-center">Get our all-time most popular recipes. Sign up now!</p>
-                        <Col className="col mx-3">
-                            <Form.Group>
-                                <Form.Label>Username</Form.Label>
-                                <Form.Control
-                                    id="txtUsername"
-                                    type="text"
-                                    required
-                                    value={username}
-                                    placeholder="Enter username"
-                                    onChange={e => setUsername(e.target.value)}
-                                />
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Label>Email Address</Form.Label>
-                                <Form.Control
-                                    id="txtEmail"
-                                    type="email"
-                                    required
-                                    value={email}
-                                    placeholder="Enter email"
-                                    onChange={e => setEmail(e.target.value)}
-                                />
-                            </Form.Group>
-                        </Col>
-                        <Col className="col mx-3">
-                            <Form.Group>
-                                <Form.Label>Password</Form.Label>
-                                <Form.Control
-                                    id="txtPassword"
-                                    type="password"
-                                    required
-                                    value={password}
-                                    placeholder="Enter password"
-                                    onChange={e => setPassword(e.target.value)}
-                                />
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Label>Confirm Password</Form.Label>
-                                <Form.Control
-                                    id="txtConfirmPassword"
-                                    type="password"
-                                    required
-                                    value={confirmPassword}
-                                    placeholder="Confirm password"
-                                    onChange={e => setConfirmPassword(e.target.value)}
-                                />
-                            </Form.Group>
-                        </Col>
+        (user.id !== null && user.id !== undefined) ?
+     <Navigate to="/login" />
+     :
+     <Container className="register-container d-flex justify-content-center">
+         <Row className="w-100">
+            <Col sx={3} md={4} lg={5} className="mx-auto">
+                 <Form onSubmit={(e) => registerUser(e)} className="register-form">
+                     <h2 className="text-center">Register</h2>
+                     <p className="text-center">Create your account. It’s free and only takes a minute.</p>
+                     <Col className="col mx-3">
+                     <Form.Group>
+                     <Form.Label>First Name </Form.Label>
+                         <Form.Control
+                             id="txtFirstName"
+                             type="text"
+                             required
+                             value={firstName}
+                             placeholder="Enter your first name"
+                             onChange={e => { setFirstName(e.target.value) }}
+                         />
+                     </Form.Group>
+                     <Form.Group>
+                     <Form.Label>Last Name </Form.Label>
+                         <Form.Control
+                             id="txtLastName"
+                             type="text"
+                             required
+                             value={lastName}
+                             placeholder="Enter your last name"
+                             onChange={e => { setLastName(e.target.value) }}
+                         />
+                     </Form.Group>
+                     <Form.Group>
+                     <Form.Label>Email Address </Form.Label>
+                         <Form.Control
+                             id="txtEmail"
+                             type="email"
+                             required
+                             value={email}
+                             placeholder="Enter your email"
+                             onChange={e => { setEmail(e.target.value) }}
+                         />
+                     </Form.Group>
+                     </Col>
+                     <Col className="col mx-3">
+                     <Form.Group>
+                     <Form.Label>Mobile No </Form.Label>
+                         <Form.Control
+                             id="txtMobileNo"
+                             type="number"
+                             required
+                             value={mobileNo}
+                             placeholder="Enter your mobile no."
+                             onChange={e => { setMobileNo(e.target.value) }}
+                         />
+                     </Form.Group>
+                     <Form.Group>
+                     <Form.Label>Password </Form.Label>
+                         <Form.Control
+                             id="txtPassword"
+                             type="password"
+                             required
+                             value={password}
+                             placeholder="Enter your password"
+                             onChange={e => { setPassword(e.target.value) }}
+                         />
+                     </Form.Group>
+                     <Form.Group>
+                     <Form.Label>Confirm Password </Form.Label>
+                         <Form.Control
+                             id="txtConfirmPassword"
+                             type="password"
+                             required
+                             value={confirmPassword}
+                             placeholder="Confirm password"
+                             onChange={e => { setConfirmPassword(e.target.value) }}
+                         />
+                     </Form.Group>
+                     </Col>
 
-                        <div className="register-button">
-                            <Button 
-                                className="btn mt-3" 
-                                variant={isActive ? "success" : "danger"} 
-                                type="submit" 
-                                id="submitBtn" 
-                                disabled={!isActive}
-                            >
-                                Register Now
-                            </Button>
-                        </div>
-                    </Form>
-                </Col>
-            </Row>
-        </Container>
-    );
+                     {isActive ? 
+                       <Button className="btn mt-3" variant="danger" type="submit" id="submitBtn">Register Now</Button> 
+                       : 
+                       <Button className="btn mt-3" variant="success" type="submit" id="submitBtn" disabled>Register Now</Button>
+                     }
+                 </Form>
+            </Col>
+        </Row>
+    </Container>
+     
+    )
 }
