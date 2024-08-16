@@ -14,7 +14,7 @@ export default function Login() {
 
     function authenticate(e) {
         e.preventDefault();
-        fetch('https://blog-server-nhh1.onrender.com/users/login', {
+        fetch('https://ra-server-nom3.onrender.com/users/login', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"

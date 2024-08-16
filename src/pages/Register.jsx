@@ -18,7 +18,7 @@ export default function Register() {
 
     const makeAPICall = async (userData) => {
         try {
-            const response = await fetch('https://blog-server-nhh1.onrender.com/users/register', {
+            const response = await fetch('https://ra-server-nom3.onrender.com/users/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
