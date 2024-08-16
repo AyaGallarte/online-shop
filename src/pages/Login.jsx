@@ -111,7 +111,7 @@ export default function Login() {
                                 <Form.Control 
                                     id="loginPassword"
                                     type="password" 
-                                    placeholder="Password" 
+                                    placeholder="Enter password" 
                                     required
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}

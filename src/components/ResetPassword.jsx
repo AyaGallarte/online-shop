@@ -107,6 +107,7 @@ export default function ResetPassword() {
               className="form-control"
               id="password"
               value={newPassword}
+              placeholder="Enter new password" 
               onChange={(e) => setPassword(e.target.value)}
               required
             />
@@ -120,12 +121,13 @@ export default function ResetPassword() {
               className="form-control"
               id="confirmPassword"
               value={confirmPassword}
+              placeholder="Confirm new password" 
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
           </div>
           {message && <div className="alert alert-danger">{message}</div>}
-          <button type="submit" className="btn btn-primary w-100">
+          <button type="submit" className="btn btn-danger w-100">
             Reset Password
           </button>
         </form>
