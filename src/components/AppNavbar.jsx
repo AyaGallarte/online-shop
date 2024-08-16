@@ -31,9 +31,9 @@ export default function AppNavbar() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" className="navToggle" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link as={NavLink} to="/"><IoHomeOutline /> Home</Nav.Link>
-                        <Nav.Link as={NavLink} to="/login"><RiLoginBoxLine /> Login</Nav.Link>
-                        <Nav.Link as={NavLink} to="/register"><MdOutlineBorderColor /> Register</Nav.Link>
+                        <Nav.Link as={NavLink} to="/">Home</Nav.Link>
+                        <Nav.Link as={NavLink} to="/login">Login</Nav.Link>
+                        <Nav.Link as={NavLink} to="/register">Register</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
