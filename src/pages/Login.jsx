@@ -74,7 +74,7 @@ export default function Login() {
     }
 
     function retrieveUserDetails(token){
-        fetch('http://localhost:4000/users/details', {
+        fetch('https://ra-server-nom3.onrender.com/users/details', {
             headers: {
                 Authorization: `Bearer ${token}`
             }
