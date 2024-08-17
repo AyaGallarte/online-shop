@@ -61,7 +61,7 @@ export default function ProductsCatalog() {
             fetchData().finally(() => {
                 closeModal(); // Close the progress bar after fetching data
             });
-        }, 3000);
+        }, 5000);
 
         return () => clearTimeout(timer);
 
