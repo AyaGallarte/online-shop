@@ -3,6 +3,8 @@ import { Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { UserProvider } from './context/UserContext';
+import { ProgressProvider } from './context/ProgressContext';
+import ProgressModal from './components/ProgressModal';
 import AppNavbar from './components/AppNavbar';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
@@ -27,7 +29,7 @@ function App() {
   }
 
   const token = localStorage.getItem('token');
-
+//https://ra-server-nom3.onrender.com
   useEffect(() => {
      if (token !== null){
           fetch('https://ra-server-nom3.onrender.com/users/details', {
@@ -62,25 +64,28 @@ function App() {
 
   return (
     <UserProvider value={{ user, setUser, unsetUser }}>
-      <Router>
-        <AppNavbar />
-        <Container>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/logout" element={<Logout />} />
-            <Route path="/products" element={<ProductsCatalog />}/>
-            <Route path="/products/:productId" element={<ProductView />}/>
-            <Route path="/addProduct" element={<AddProduct />}/>
-            <Route path="/cart" element={<CartView />}/>
-            <Route path="/order" element={<OrderView />}/>
-            <Route path="/adminOrder" element={<AdminOrderView />}/>
-          </Routes>
-        </Container>
-      </Router>
-    </UserProvider>
+      <ProgressProvider>
+      <ProgressModal />
+        <Router>
+          <AppNavbar />
+            <Container>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/logout" element={<Logout />} />
+                <Route path="/products" element={<ProductsCatalog />}/>
+                <Route path="/products/:productId" element={<ProductView />}/>
+                <Route path="/addProduct" element={<AddProduct />}/>
+                <Route path="/cart" element={<CartView />}/>
+                <Route path="/order" element={<OrderView />}/>
+                <Route path="/adminOrder" element={<AdminOrderView />}/>
+              </Routes>
+            </Container>
+          </Router>
+        </ProgressProvider>
+      </UserProvider>
   );
 }
 

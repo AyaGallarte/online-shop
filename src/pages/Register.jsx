@@ -3,45 +3,47 @@ import { Form, Button, Col, Row, Container } from 'react-bootstrap';
 import { useNavigate, Navigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import UserContext from '../context/UserContext';
+import { useProgress } from '../context/ProgressContext';
 import '../style.css';
 
 export default function Register() {
 
-    const {user} = useContext(UserContext);
+    const { user } = useContext(UserContext);
+    const { startProgress, closeModal } = useProgress();
     const navigate = useNavigate(); 
+
     // State hooks to store the values of the input fields
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
-    const [mobileNo, setMobileNo] = useState("")
+    const [mobileNo, setMobileNo] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    // State to determine whether submit button is enable or not
+
+    // State to determine whether the submit button is enabled or not
     const [isActive, setIsActive] = useState(false);
 
-    function registerUser(e){
-        // Prevents the page redirection via form submission
-        e.preventDefault();
+    async function registerUser(e) {
+        e.preventDefault(); // Prevents the page redirection via form submission
 
-        fetch("https://ra-server-nom3.onrender.com/users/register", {
+        try {
+            const response = await fetch("https://ra-server-nom3.onrender.com/users/register", {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    mobileNo: mobileNo,
+                    password: password
+                })
+            });
 
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                mobileNo: mobileNo,
-                password: password
-            })
+            const data = await response.json();
 
-        })
-        .then(res => res.json())
-        .then(data => {
-
-            if(data.message === "Registered Successfully"){
+            if (data.message === "Registered Successfully") {
                 setFirstName("");
                 setLastName("");
                 setEmail("");
@@ -59,7 +61,7 @@ export default function Register() {
                     navigate('/login');
                 });
 
-            }else if(data.error === "Email invalid"){
+            } else if (data.error === "Email invalid") {
                 Swal.fire({
                     title: "Invalid Email Format",
                     icon: "error",
@@ -67,8 +69,8 @@ export default function Register() {
                     customClass: {
                         confirmButton: 'sweet-warning'
                     }
-                })
-            }else if(data.error === "Mobile number invalid"){
+                });
+            } else if (data.error === "Mobile number invalid") {
                 Swal.fire({
                     title: "Mobile Number Invalid",
                     icon: "error",
@@ -76,17 +78,17 @@ export default function Register() {
                     customClass: {
                         confirmButton: 'sweet-warning'
                     }
-                })
-            }else if(data.error === "Password must be atleast 8 characters"){
+                });
+            } else if (data.error === "Password must be atleast 8 characters") {
                 Swal.fire({
                     title: "Password Invalid",
                     icon: "error",
-                    text: "Password must be atleast 8 characters long.",
+                    text: "Password must be at least 8 characters long.",
                     customClass: {
                         confirmButton: 'sweet-warning'
                     }
-                })
-            }else{
+                });
+            } else {
                 Swal.fire({
                     title: "Something went wrong.",
                     icon: "error",
@@ -96,20 +98,36 @@ export default function Register() {
                     }
                 });
             }
-        })
+        } catch (e) {
+            console.error('Fetch error:', e);
+            Swal.fire({
+                title: "Error",
+                icon: "error",
+                text: "An unexpected error occurred. Please try again later."
+            });
+        }
     }
 
     useEffect(() => {
-        if((firstName !== "" && lastName !== "" && email !== "" && mobileNo !== "" && password !== "" && confirmPassword !== "") && (password === confirmPassword) && (mobileNo.length === 11)){
-
-            setIsActive(true)
-
+        if ((firstName !== "" && lastName !== "" && email !== "" && mobileNo !== "" && password !== "" && confirmPassword !== "") && (password === confirmPassword) && (mobileNo.length === 11)) {
+            setIsActive(true);
         } else {
-
-            setIsActive(false)
-
+            setIsActive(false);
         }
-    }, [firstName, lastName, email, mobileNo, password, confirmPassword])
+    }, [firstName, lastName, email, mobileNo, password, confirmPassword]);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        startProgress();
+
+        await setTimeout(() => {
+            try {
+                 registerUser(e);
+            } finally {
+                closeModal();
+            }
+        }, 5000);  
+    };
 
     return (
         (user.id !== null && user.id !== undefined) ?
@@ -118,7 +136,7 @@ export default function Register() {
      <Container className="register-container d-flex justify-content-center">
          <Row className="w-100">
             <Col sx={3} md={4} lg={5} className="mx-auto">
-                 <Form onSubmit={(e) => registerUser(e)} className="register-form">
+                 <Form onSubmit={handleSubmit} className="register-form">
                      <h2 className="text-center">Register</h2>
                      <p className="text-center">Create your account. It’s free and only takes a minute.</p>
                      <Col className="col mx-3">
