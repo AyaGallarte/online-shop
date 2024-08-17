@@ -26,8 +26,6 @@ export default function UserView({ productsData }) {
     return (
         !productsData ? (
             <p>Loading...</p>
-          ) : productsData.length <= 0 ? (
-            <p>No products available</p>
           )  :  (
             <Container className="container">
                 <h2 className="page-title text-center mt-4">Our Products</h2>
