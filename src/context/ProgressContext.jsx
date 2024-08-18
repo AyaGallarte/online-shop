@@ -19,7 +19,7 @@ export function ProgressProvider({ children }) {
     const id = setInterval(() => {
       setProgress((prevProgress) => {
         // Increment progress and ensure it does not exceed 100
-        const newProgress = Math.min(prevProgress + Math.random() * 5, 100);
+        const newProgress = Math.min(prevProgress + Math.random() * 10, 100);
 
         if (newProgress >= 100) {
           clearInterval(id);
