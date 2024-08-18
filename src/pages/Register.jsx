@@ -24,8 +24,6 @@ export default function Register() {
     const [isActive, setIsActive] = useState(false);
 
     async function registerUser(e) {
-        e.preventDefault(); // Prevents the page redirection via form submission
-
         try {
             const response = await fetch("https://ra-server-nom3.onrender.com/users/register", {
                 method: 'POST',
@@ -116,16 +114,15 @@ export default function Register() {
         }
     }, [firstName, lastName, email, mobileNo, password, confirmPassword]);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         startProgress();
 
-        await setTimeout(() => {
-            try {
-                 registerUser(e);
-            } finally {
+        setTimeout(() => {
+            registerUser(e)
+            .finally(() => {
                 closeModal();
-            }
+            });
         }, 5000);  
     };
 
