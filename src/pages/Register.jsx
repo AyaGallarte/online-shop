@@ -123,7 +123,7 @@ export default function Register() {
             .finally(() => {
                 closeModal();
             });
-        }, 5000);  
+        }, 3000);  
     };
 
     return (
