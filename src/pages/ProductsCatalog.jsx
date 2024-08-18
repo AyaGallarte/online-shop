@@ -27,10 +27,9 @@ export default function ProductsCatalog() {
                 }
             })
             
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return res.json();
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
             
             const data = await response.json();
                 
