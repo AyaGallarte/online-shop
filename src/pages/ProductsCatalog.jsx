@@ -27,7 +27,7 @@ export default function ProductsCatalog() {
                 }
             })
             
-                if (!res.ok) {
+                if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 return res.json();
