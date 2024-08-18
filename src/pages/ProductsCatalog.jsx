@@ -13,7 +13,7 @@ export default function ProductsCatalog() {
 
     const fetchData = async () => {
         setLoading(true); // Start loading
-        // Determine the fetch URL based on user role
+
         let fetchUrl = user.isAdmin === true ? 
             "https://ra-server-nom3.onrender.com/products/all" : 
             "https://ra-server-nom3.onrender.com/products/active";
@@ -26,25 +26,19 @@ export default function ProductsCatalog() {
                     })
                 }
             })
-            .then(res => {
+            
                 if (!res.ok) {
                     throw new Error('Network response was not ok');
                 }
                 return res.json();
-            })
-            .then(data => {
-                // Check if no products were found and update state accordingly
+            
+            const data = await response.json();
+                
                 if (data.message === "No products found") {
                     setProducts([]);
                 } else {
                     setProducts(data.products || []);
                 }
-            })
-            .catch(error => {
-                console.error('Fetch error:', error);
-                // Handle the error, e.g., by setting an error message in the state
-                setProducts([]);  // Or any other error handling you prefer
-            });
         } catch (error) {
             console.error("Error fetching data:", error);
             setProducts([]);
@@ -54,14 +48,13 @@ export default function ProductsCatalog() {
         }     
     };
 
-
    useEffect(() => {
         startProgress();
         const timer = setTimeout(() => {
             fetchData().finally(() => {
                 closeModal(); // Close the progress bar after fetching data
             });
-        }, 5000);
+        }, 10000);
 
         return () => clearTimeout(timer);
 
