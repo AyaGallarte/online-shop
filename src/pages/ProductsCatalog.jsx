@@ -91,7 +91,7 @@ export default function ProductsCatalog() {
 
     const fetchData = async () => {
         try {
-            startProgress();  // Start loading/progress
+            
             const fetchUrl = user.isAdmin 
                 ? "https://ra-server-nom3.onrender.com/products/all" 
                 : "https://ra-server-nom3.onrender.com/products/active";
@@ -120,6 +120,7 @@ export default function ProductsCatalog() {
     };
 
     useEffect(() => {
+        startProgress(); 
         const timer = setTimeout(fetchData, 5000);
         return () => clearTimeout(timer);
     }, [user]);
