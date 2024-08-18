@@ -121,7 +121,7 @@ export default function ProductsCatalog() {
 
     useEffect(() => {
         startProgress(); 
-        const timer = setTimeout(fetchData, 5000);
+        const timer = setTimeout(fetchData, 1000);
         return () => clearTimeout(timer);
     }, [user]);
 
