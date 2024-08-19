@@ -111,9 +111,7 @@ export default function Register() {
     const handleSubmit = (e) => {
         e.preventDefault();
         startProgress();
-        setTimeout(() => {
-            registerUser().finally(() => closeModal());
-        }, 2000);  
+        registerUser().finally(() => closeModal());
     };
 
     if (user.id) return <Navigate to="/login" />;

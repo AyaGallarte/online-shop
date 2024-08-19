@@ -99,13 +99,7 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         startProgress();
-
-        try {
-            await delay(1000); 
-            await authenticate(e);
-        } finally {
-            closeModal();
-        }
+        authenticate(e).finally.finally(() => closeModal());
     };
 
     function delay(ms) {

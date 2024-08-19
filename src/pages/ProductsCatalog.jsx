@@ -41,8 +41,7 @@ export default function ProductsCatalog() {
 
     useEffect(() => {
         startProgress(); 
-        const timer = setTimeout(fetchData, 1000);
-        return () => clearTimeout(timer);
+        fetchData();
     }, [user]);
 
     return user.isAdmin 

@@ -21,8 +21,6 @@ export default function UserView({ productsData }) {
 
     const [expanded, setExpanded] = useState({});
 
-    console.log('here ' + productsData.length, productsData);
-
     return (
         !productsData ? (
             <p>Loading...</p>

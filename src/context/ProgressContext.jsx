@@ -28,7 +28,7 @@ export function ProgressProvider({ children }) {
 
         return newProgress;
       });
-    }, 100); // Slower interval
+    }, 500); // Slower interval
 
     setIntervalId(id);
   }, []);
