@@ -31,31 +31,60 @@ function App() {
 
   const token = localStorage.getItem('token');
 //https://ra-server-nom3.onrender.com
+  // useEffect(() => {
+  //    if (token !== null){
+  //         fetch('https://ra-server-nom3.onrender.com/users/details', {
+  //     mode: 'cors',
+  //     headers: {
+  //       Authorization: `Bearer ${localStorage.getItem('token')}`
+  //     }
+  //   })
+  //   .then(res => res.json())
+  //   .then(data => {
+  //     if(typeof data !== 'undefined') {
+  //       setUser({
+  //         id: data.user._id,
+  //         isAdmin: data.user.isAdmin
+  //       });
+  //       sessionStorage.setItem('token', data.token);
+  //     } else {
+  //       setUser({
+  //         id: null,
+  //         isAdmin: null
+  //       });
+  //       sessionStorage.clear();
+  //     }
+  //   });
+  //    }
+  // }, []);
   useEffect(() => {
-     if (token !== null){
+      const token = localStorage.getItem('token');
+      if (token) {
           fetch('https://ra-server-nom3.onrender.com/users/details', {
-      mode: 'cors',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
-    })
-    .then(res => res.json())
-    .then(data => {
-      if(typeof data !== 'undefined') {
-        setUser({
-          id: data.user._id,
-          isAdmin: data.user.isAdmin
-        });
-        sessionStorage.setItem('token', data.token);
+              mode: 'cors',
+              headers: {
+                  Authorization: `Bearer ${token}`
+              }
+          })
+          .then(res => res.json())
+          .then(data => {
+              if (data.user) {
+                  setUser({
+                      id: data.user._id,
+                      isAdmin: data.user.isAdmin
+                  });
+                  sessionStorage.setItem('token', data.token);
+              } else {
+                  unsetUser();
+              }
+          })
+          .catch(error => {
+              console.error('Error fetching user details:', error);
+              unsetUser();  // Ensure user is unset on error
+          });
       } else {
-        setUser({
-          id: null,
-          isAdmin: null
-        });
-        sessionStorage.clear();
+          unsetUser();  // Ensure user is unset if no token is found
       }
-    });
-     }
   }, []);
 
   useEffect(() => {
