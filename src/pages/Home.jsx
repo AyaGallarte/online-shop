@@ -25,9 +25,13 @@ import '../index.css';
 export default function Home() {
     const { fetchProducts } = useContext(ProductsContext);
 
+    // useEffect(() => {
+    //     // Fetch products when the Home component mounts
+    //     fetchProducts();
+    // }, [fetchProducts]);
     useEffect(() => {
-        // Fetch products when the Home component mounts
-        fetchProducts();
+        console.log(typeof fetchProducts); // Check if this is a function
+        fetchProducts();  // If this is where the error is, double-check this function
     }, [fetchProducts]);
 
     return (
