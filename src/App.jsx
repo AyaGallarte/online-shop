@@ -29,7 +29,7 @@ function App() {
     localStorage.clear();
   }
 
-  const token = localStorage.getItem('token');
+  //const token = localStorage.getItem('token');
 //https://ra-server-nom3.onrender.com
   // useEffect(() => {
   //    if (token !== null){
