@@ -86,7 +86,7 @@ function App() {
                   </Routes>
               </Container>
             </Router>
-          <ProductsProvider>
+          </ProductsProvider>
         </ProgressProvider>
       </UserProvider>
   );
