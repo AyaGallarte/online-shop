@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { UserProvider } from './context/UserContext';
 import { ProgressProvider } from './context/ProgressContext';
-import { ProductsProvider } from './context/ProductsContext';
 import ProgressModal from './components/ProgressModal';
 import AppNavbar from './components/AppNavbar';
 import Home from './pages/Home';
@@ -29,62 +28,33 @@ function App() {
     localStorage.clear();
   }
 
-  //const token = localStorage.getItem('token');
+  const token = localStorage.getItem('token');
 //https://ra-server-nom3.onrender.com
-  // useEffect(() => {
-  //    if (token !== null){
-  //         fetch('https://ra-server-nom3.onrender.com/users/details', {
-  //     mode: 'cors',
-  //     headers: {
-  //       Authorization: `Bearer ${localStorage.getItem('token')}`
-  //     }
-  //   })
-  //   .then(res => res.json())
-  //   .then(data => {
-  //     if(typeof data !== 'undefined') {
-  //       setUser({
-  //         id: data.user._id,
-  //         isAdmin: data.user.isAdmin
-  //       });
-  //       sessionStorage.setItem('token', data.token);
-  //     } else {
-  //       setUser({
-  //         id: null,
-  //         isAdmin: null
-  //       });
-  //       sessionStorage.clear();
-  //     }
-  //   });
-  //    }
-  // }, []);
   useEffect(() => {
-      const token = localStorage.getItem('token');
-      if (token) {
+     if (token !== null){
           fetch('https://ra-server-nom3.onrender.com/users/details', {
-              mode: 'cors',
-              headers: {
-                  Authorization: `Bearer ${token}`
-              }
-          })
-          .then(res => res.json())
-          .then(data => {
-              if (data.user) {
-                  setUser({
-                      id: data.user._id,
-                      isAdmin: data.user.isAdmin
-                  });
-                  sessionStorage.setItem('token', data.token);
-              } else {
-                  unsetUser();
-              }
-          })
-          .catch(error => {
-              console.error('Error fetching user details:', error);
-              unsetUser();  // Ensure user is unset on error
-          });
-      } else {
-          unsetUser();  // Ensure user is unset if no token is found
+      mode: 'cors',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       }
+    })
+    .then(res => res.json())
+    .then(data => {
+      if(typeof data !== 'undefined') {
+        setUser({
+          id: data.user._id,
+          isAdmin: data.user.isAdmin
+        });
+        sessionStorage.setItem('token', data.token);
+      } else {
+        setUser({
+          id: null,
+          isAdmin: null
+        });
+        sessionStorage.clear();
+      }
+    });
+     }
   }, []);
 
   useEffect(() => {
@@ -95,27 +65,25 @@ function App() {
   return (
     <UserProvider value={{ user, setUser, unsetUser }}>
       <ProgressProvider>
-        <ProductsProvider>
-          <ProgressModal />
-            <Router>
-              <AppNavbar />
-                <Container>
-                  <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/profile" element={<Profile />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/logout" element={<Logout />} />
-                    <Route path="/products" element={<ProductsCatalog />}/>
-                    <Route path="/products/:productId" element={<ProductView />}/>
-                    <Route path="/addProduct" element={<AddProduct />}/>
-                    <Route path="/cart" element={<CartView />}/>
-                    <Route path="/order" element={<OrderView />}/>
-                    <Route path="/adminOrder" element={<AdminOrderView />}/>
-                  </Routes>
-              </Container>
-            </Router>
-          </ProductsProvider>
+      <ProgressModal />
+        <Router>
+          <AppNavbar />
+            <Container>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/logout" element={<Logout />} />
+                <Route path="/products" element={<ProductsCatalog />}/>
+                <Route path="/products/:productId" element={<ProductView />}/>
+                <Route path="/addProduct" element={<AddProduct />}/>
+                <Route path="/cart" element={<CartView />}/>
+                <Route path="/order" element={<OrderView />}/>
+                <Route path="/adminOrder" element={<AdminOrderView />}/>
+              </Routes>
+            </Container>
+          </Router>
         </ProgressProvider>
       </UserProvider>
   );
