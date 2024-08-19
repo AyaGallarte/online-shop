@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { UserProvider } from './context/UserContext';
 import { ProgressProvider } from './context/ProgressContext';
+import { ProductsProvider } from './context/ProductsContext';
 import ProgressModal from './components/ProgressModal';
 import AppNavbar from './components/AppNavbar';
 import Home from './pages/Home';
@@ -65,25 +66,27 @@ function App() {
   return (
     <UserProvider value={{ user, setUser, unsetUser }}>
       <ProgressProvider>
-      <ProgressModal />
-        <Router>
-          <AppNavbar />
-            <Container>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/logout" element={<Logout />} />
-                <Route path="/products" element={<ProductsCatalog />}/>
-                <Route path="/products/:productId" element={<ProductView />}/>
-                <Route path="/addProduct" element={<AddProduct />}/>
-                <Route path="/cart" element={<CartView />}/>
-                <Route path="/order" element={<OrderView />}/>
-                <Route path="/adminOrder" element={<AdminOrderView />}/>
-              </Routes>
-            </Container>
-          </Router>
+        <ProductsProvider>
+          <ProgressModal />
+            <Router>
+              <AppNavbar />
+                <Container>
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/logout" element={<Logout />} />
+                    <Route path="/products" element={<ProductsCatalog />}/>
+                    <Route path="/products/:productId" element={<ProductView />}/>
+                    <Route path="/addProduct" element={<AddProduct />}/>
+                    <Route path="/cart" element={<CartView />}/>
+                    <Route path="/order" element={<OrderView />}/>
+                    <Route path="/adminOrder" element={<AdminOrderView />}/>
+                  </Routes>
+              </Container>
+            </Router>
+          <ProductsProvider>
         </ProgressProvider>
       </UserProvider>
   );
